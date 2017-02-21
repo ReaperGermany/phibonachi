@@ -3,12 +3,50 @@ package controllers
 import javax.inject._
 import play.api._
 import play.api.mvc._
-import scala.collection.immutable.ListMap
 
 /**
- * This controller creates an `Action` to handle HTTP requests to the
- * application's home page.
- */
+  * This controller creates an `Action` to handle HTTP requests to the
+  * application's home page.
+  */
+
+@Singleton
+class PhibController extends Controller {
+
+  def nthFibonacci(out: Int): Int = {
+    var num_a = 0
+    var num_b = 1
+    var num_c = 1
+    var i = 1
+
+    while (i != out) {
+      num_c = num_a + num_b
+      num_a = num_b
+      num_b = num_c
+      i += 1
+    }
+    return num_c
+  }
+
+  def index(limit: Int) = Action {
+    _ => {
+
+      for (i <- 1 to limit){
+        println(nthFibonacci(i))
+      }
+      Ok
+    }
+  }
+}
+
+
+
+/*package controllers
+
+import javax.inject._
+import play.api._
+import play.api.mvc._
+import scala.collection.immutable.ListMap
+
 @Singleton
 class PhibController extends Controller {
 
@@ -32,4 +70,4 @@ class PhibController extends Controller {
       Ok(" " + ListMap(map.toSeq.sortWith(_._1 < _._1):_*))
     }
   }
-}
+}*/
